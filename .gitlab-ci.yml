@@ -1,0 +1,28 @@
+stages:
+  - build
+  - deploy
+
+image: alpine
+
+before_script:
+  - git config --global http.sslVerify false
+
+get_packer:
+  stage: build
+  tags: k8s
+  artifacts:
+    paths:
+    - packer
+  script:
+    - echo "Fetching packer"
+    - wget https://releases.hashicorp.com/packer/1.6.1/packer_1.6.1_linux_amd64.zip
+    - unzip packer_1.6.1_linux_amd64.zip
+    - chmod +x packer
+
+deploy_windows-10:
+  stage: deploy
+  tags: k8s
+  script:
+    - echo "Deploying Windows 10"
+    - cd windows-10
+    - ../packer build -force -var-file variables.json windows-10-pilot.json

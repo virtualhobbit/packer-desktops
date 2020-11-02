@@ -148,7 +148,7 @@
     {
       "type":                      "powershell",
       "inline": [
-        "Get-EventLog -LogName * | ForEach { Clear-EventLog $_.Log }"
+        "Get-EventLog -LogName * | ForEach { Clear-EventLog -LogName $_.Log }"
       ]
     }
   ]
