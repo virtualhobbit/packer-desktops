@@ -2,27 +2,26 @@ stages:
   - build
   - deploy
 
-image: alpine
-
 before_script:
   - git config --global http.sslVerify false
 
 get_packer:
   stage: build
-  tags: k8s
+  tags: 
+  - windows
   artifacts:
     paths:
-    - packer
+    - packer.exe
   script:
-    - echo "Fetching packer"
-    - wget https://releases.hashicorp.com/packer/1.6.1/packer_1.6.1_linux_amd64.zip
-    - unzip packer_1.6.1_linux_amd64.zip
-    - chmod +x packer
+    - Write-Output "Fetching packer"
+    - Invoke-WebRequest  -Uri ("https://releases.hashicorp.com/packer/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
+    - Expand-Archive $packerFile -DestinationPath .
 
 deploy_windows-10:
   stage: deploy
-  tags: k8s
+  tags:
+  - windows
   script:
-    - echo "Deploying Windows 10"
+    - Write-Output "Deploying Windows 10"
     - cd windows-10
-    - ../packer build -force -var-file variables.json windows-10-pilot.json
+    - ../packer.exe build -force -var-file variables.json windows-10-pilot.json
