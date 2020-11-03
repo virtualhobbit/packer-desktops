@@ -14,6 +14,7 @@ get_packer:
     - packer.exe
   script:
     - echo $packerVersion
+    - $packerFile = "packer_" + $packerVersion + "_windows_amd64.zip"
     - echo $packerFile
     - Write-Output "Fetching packer"
     - Invoke-WebRequest  -Uri ("https://releases.hashicorp.com/packer/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
