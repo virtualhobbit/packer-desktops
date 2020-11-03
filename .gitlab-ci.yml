@@ -37,10 +37,11 @@ install_vmware_powercli:
   script:
     - Write-Output "Installing NuGet"
     - Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-    - Write-Output Set the repo installation policy"
+    - Write-Output "Set the repo installation policy"
     - Set-PSRepository PSGallery -InstallationPolicy Trusted
     - Write-Output "Installing PowerCLI"
     - Install-Module -Name VMware.PowerCLI -Scope CurrentUser -Confirm:$false
     - Write-Output "Configuring CEIP"
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $true -InvalidCertificateAction Ignore -Confirm:$false
     - Write-Output "Importing the helper module"
+    - Import-Module VMware.VimAutomation.HorizonView
