@@ -13,6 +13,9 @@ get_packer:
     paths:
     - packer.exe
   script:
+    - dir env:
+    - echo $packerVersion
+    - echo $packerFile
     - Write-Output "Fetching packer"
     - Invoke-WebRequest  -Uri ("https://releases.hashicorp.com/packer/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
     - Expand-Archive $packerFile -DestinationPath .
