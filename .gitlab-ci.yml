@@ -1,6 +1,7 @@
 stages:
   - build
   - deploy
+  - powercli
 
 before_script:
   - git config --global http.sslVerify false
@@ -28,3 +29,19 @@ deploy_windows-10:
     - Write-Output "Deploying Windows 10"
     - cd windows-10
     - ../packer.exe build -force -var-file variables.json windows-10-pilot.json
+
+install_vmware_powercli:
+  stage: powercli
+  tags:
+  - windows
+  script:
+    - Write-Output "Installing NuGet"
+    - Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+    - Write-Output Set the repo installation policy"
+    - Set-PSRepository PSGallery -InstallationPolicy Trusted
+    - Write-Output "Installing PowerCLI"
+    - Install-Module -Name VMware.PowerCLI -Scope CurrentUser -Confirm:$false
+    - Write-Output "Configure CEIP"
+    - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $true -InvalidCertificateAction Ignore -Confirm:$false
+    - Write-Output "Import the helper module"
+    - Import-Module VMware.VimAutomation.HorizonView

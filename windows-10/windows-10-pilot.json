@@ -86,6 +86,7 @@
       "search_criteria":           "IsInstalled=0",
       "filters": [
         "exclude:$_.Title -like '*Preview*'",
+        "exclude:$_.Title -like '*KB4579311*'",
         "include:$true"
       ]
     },
