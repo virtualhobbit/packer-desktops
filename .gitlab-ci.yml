@@ -41,7 +41,6 @@ install_vmware_powercli:
     - Set-PSRepository PSGallery -InstallationPolicy Trusted
     - Write-Output "Installing PowerCLI"
     - Install-Module -Name VMware.PowerCLI -Scope CurrentUser -Confirm:$false
-    - Write-Output "Configure CEIP"
+    - Write-Output "Configuring CEIP"
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $true -InvalidCertificateAction Ignore -Confirm:$false
-    - Write-Output "Import the helper module"
-    - Import-Module VMware.VimAutomation.HorizonView
+    - Write-Output "Importing the helper module"
