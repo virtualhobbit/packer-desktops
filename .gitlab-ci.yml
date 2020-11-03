@@ -13,7 +13,6 @@ get_packer:
     paths:
     - packer.exe
   script:
-    - dir env:
     - echo $packerVersion
     - echo $packerFile
     - Write-Output "Fetching packer"
