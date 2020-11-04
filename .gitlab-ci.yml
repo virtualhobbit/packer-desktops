@@ -44,10 +44,7 @@ install_powercli:
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -InvalidCertificateAction Ignore -Confirm:$false
     - Write-Host "Importing the helper module"
     - Import-Module VMware.VimAutomation.HorizonView
-    - Write-Host "Installing PowerCLI Example scripts"
-    - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0]
-    - Write-Host "The location is " + $modulePath
-    - if (Test-Path $env:Temp\PowerCLI-Example-Scripts){Remove-Item $env:Temp\PowerCLI-Example-Scripts -Recurse -Confirm:$false}
+    - if (Test-Path $env:Temp\PowerCLI-Example-Scripts){Remove-Item $env:Temp\PowerCLI-Example-Scripts -Recurse -Force -Confirm:$false}
     - git clone $exampleScriptURL $env:Temp\PowerCLI-Example-Scripts
     - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts\Modules\VMware.Hv.Helper ([Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0])
 
@@ -58,5 +55,6 @@ recompose_pool:
   script:
     - Write-Host "Connecting to Horizon"
     - $hvServer = Connect-HVServer -Server $cs -User $csUser -Password $csPass -Domain $csDomain
-    - $hvServices = $hvserver.ExtensionData
-    - $hvServices
+    - Get-HVPool $poolName
+    - Write-Host "Disconnecting to Horizon"
+    - Disconnect-HVServer -Server $cs -Confirm:$false
