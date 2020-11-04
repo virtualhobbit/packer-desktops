@@ -15,12 +15,9 @@ get_packer:
     paths:
     - packer.exe
   script:
-    - echo $packerVersion
-    - $packerFile = "packer_" + $packerVersion + "_windows_amd64.zip"
-    - echo $packerFile
-    - echo $env:packer_vmName
     - Write-Host "Fetching packer"
-    - Invoke-WebRequest  -Uri ("https://releases.hashicorp.com/packer/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
+    - $packerFile = "packer_" + $packerVersion + "_windows_amd64.zip
+    - Invoke-WebRequest  -Uri ($packerURL + "/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
     - Expand-Archive $packerFile -DestinationPath .
 
 deploy_windows-10:
@@ -31,8 +28,9 @@ deploy_windows-10:
     - Write-Host "Deploying Windows 10"
     - cd windows-10
     - ../packer.exe build -force windows-10-pilot.json
+    - Write-Host "The location is " + $Env:PSModulePath
 
-install_vmware_powercli:
+install_powercli:
   stage: powercli
   tags:
   - windows
@@ -47,6 +45,8 @@ install_vmware_powercli:
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -InvalidCertificateAction Ignore -Confirm:$false
     - Write-Host "Importing the helper module"
     - Import-Module VMware.VimAutomation.HorizonView
+    - Write-Host "Installing PowerCLI Example scripts"
+    - git clone https://github.com/vmware/PowerCLI-Example-Scripts $env:Temp\PowerCLI-Example-Scripts
 
 recompose_pilot_pool:
   stage: recompose
