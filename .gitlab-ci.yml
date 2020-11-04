@@ -17,7 +17,7 @@ get_packer:
     - echo $packerVersion
     - $packerFile = "packer_" + $packerVersion + "_windows_amd64.zip"
     - echo $packerFile
-    - Write-Output "Fetching packer"
+    - Write-Host "Fetching packer" -ForegroundColor Cyan
     - Invoke-WebRequest  -Uri ("https://releases.hashicorp.com/packer/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
     - Expand-Archive $packerFile -DestinationPath .
 
@@ -26,7 +26,7 @@ deploy_windows-10:
   tags:
   - windows
   script:
-    - Write-Output "Deploying Windows 10"
+    - Write-Host "Deploying Windows 10" -ForegroundColor Cyan
     - cd windows-10
     - ../packer.exe build -force -var-file variables.json windows-10-pilot.json
 
@@ -35,13 +35,23 @@ install_vmware_powercli:
   tags:
   - windows
   script:
-    - Write-Output "Installing NuGet"
+    - Write-Host "Installing NuGet" -ForegroundColor Cyan
     - Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-    - Write-Output "Set the repo installation policy"
+    - Write-Host "Set the repo installation policy" -ForegroundColor Cyan
     - Set-PSRepository PSGallery -InstallationPolicy Trusted
-    - Write-Output "Installing PowerCLI"
+    - Write-Host "Installing PowerCLI" -ForegroundColor Cyan
     - Install-Module -Name VMware.PowerCLI -Scope CurrentUser -Confirm:$false
     - sleep 60
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -InvalidCertificateAction Ignore -Confirm:$false
-    - Write-Output "Importing the helper module"
+    - Write-Host "Importing the helper module" -ForegroundColor Cyan
     - Import-Module VMware.VimAutomation.HorizonView
+
+recompose_pilot_pool:
+  stage: recompose
+  tags:
+  - windows
+  script:
+    - Write-Host "Connecting to Horizon" -ForegroundColor Cyan
+    - $hvServer = Connect-HVServer -Server $cs -User $csUser -Password $csPass -Domain $csDomain
+    - $hvServices = $hvserver.ExtensionData
+    - $hvServices
