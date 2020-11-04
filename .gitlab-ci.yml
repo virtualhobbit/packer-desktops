@@ -28,7 +28,6 @@ deploy_windows-10:
     - Write-Host "Deploying Windows 10"
     - cd windows-10
     - ../packer.exe build -force windows-10-pilot.json
-    - Write-Host "The location is " + $Env:PSModulePath
 
 install_powercli:
   stage: powercli
@@ -46,9 +45,12 @@ install_powercli:
     - Write-Host "Importing the helper module"
     - Import-Module VMware.VimAutomation.HorizonView
     - Write-Host "Installing PowerCLI Example scripts"
+    - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath', 'User')
+    - Write-Host "The location is " + $modulePath
     - git clone $exampleScriptURL $env:Temp\PowerCLI-Example-Scripts
+    - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts\Modules\VMware.Hv.Helper $modulePath
 
-recompose_pilot_pool:
+recompose_pool:
   stage: recompose
   tags:
   - windows
