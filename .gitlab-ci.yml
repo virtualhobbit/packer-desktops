@@ -2,6 +2,7 @@ stages:
   - build
   - deploy
   - powercli
+  - recompose
 
 before_script:
   - git config --global http.sslVerify false
