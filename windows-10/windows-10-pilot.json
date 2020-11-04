@@ -8,8 +8,8 @@
     "datastore":                   "{{env `packer_datastore`}}",
     "datastore_iso":               "{{env `packer_datastoreISO`}}",
     "network":                     "{{env `packer_network`}}",
-    "winrmUser":                   "{{vault `secrets/creds/users/misc/administrator` `Username`}}",
-    "winrmPass":                   "{{vault `secrets/creds/users/misc/administrator` `Password`}}"
+    "winrmUser":                   "{{vault `creds/users/misc/administrator` `Username`}}",
+    "winrmPass":                   "{{vault `creds/users/misc/administrator` `Password`}}"
   },
   "builders": [
     {
