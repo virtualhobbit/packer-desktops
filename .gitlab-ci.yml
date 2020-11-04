@@ -18,6 +18,7 @@ get_packer:
     - echo $packerVersion
     - $packerFile = "packer_" + $packerVersion + "_windows_amd64.zip"
     - echo $packerFile
+    - echo $env:packer_vmName
     - Write-Host "Fetching packer" -ForegroundColor Cyan
     - Invoke-WebRequest  -Uri ("https://releases.hashicorp.com/packer/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
     - Expand-Archive $packerFile -DestinationPath .
