@@ -19,7 +19,7 @@ get_packer:
     - $packerFile = "packer_" + $packerVersion + "_windows_amd64.zip"
     - echo $packerFile
     - echo $env:packer_vmName
-    - Write-Host "Fetching packer" -ForegroundColor Cyan
+    - Write-Host "Fetching packer"
     - Invoke-WebRequest  -Uri ("https://releases.hashicorp.com/packer/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
     - Expand-Archive $packerFile -DestinationPath .
 
@@ -28,24 +28,24 @@ deploy_windows-10:
   tags:
   - windows
   script:
-    - Write-Host "Deploying Windows 10" -ForegroundColor Cyan
+    - Write-Host "Deploying Windows 10"
     - cd windows-10
-    - ../packer.exe build -force -var-file variables.json windows-10-pilot.json
+    - ../packer.exe build -force windows-10-pilot.json
 
 install_vmware_powercli:
   stage: powercli
   tags:
   - windows
   script:
-    - Write-Host "Installing NuGet" -ForegroundColor Cyan
+    - Write-Host "Installing NuGet"
     - Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-    - Write-Host "Set the repo installation policy" -ForegroundColor Cyan
+    - Write-Host "Set the repo installation policy"
     - Set-PSRepository PSGallery -InstallationPolicy Trusted
-    - Write-Host "Installing PowerCLI" -ForegroundColor Cyan
+    - Write-Host "Installing PowerCLI"
     - Install-Module -Name VMware.PowerCLI -Scope CurrentUser -Confirm:$false
     - sleep 60
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -InvalidCertificateAction Ignore -Confirm:$false
-    - Write-Host "Importing the helper module" -ForegroundColor Cyan
+    - Write-Host "Importing the helper module"
     - Import-Module VMware.VimAutomation.HorizonView
 
 recompose_pilot_pool:
@@ -53,7 +53,7 @@ recompose_pilot_pool:
   tags:
   - windows
   script:
-    - Write-Host "Connecting to Horizon" -ForegroundColor Cyan
+    - Write-Host "Connecting to Horizon"
     - $hvServer = Connect-HVServer -Server $cs -User $csUser -Password $csPass -Domain $csDomain
     - $hvServices = $hvserver.ExtensionData
     - $hvServices

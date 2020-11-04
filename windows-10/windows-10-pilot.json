@@ -1,15 +1,26 @@
 {
+  "variables": {
+    "vcenter":                     "{{env `packer_vcenter`}}",
+    "vcenterUser":                 "{{env `packer_vcenterUser`}}",
+    "vcenterPass":                 "{{env `packer_vcenterPass`}}",
+    "vmName":                      "{{env `packer_vmName`}}",
+    "cluster":                     "{{env `packer_cluster`}}",
+    "datastore":                   "{{env `packer_datastore`}}",
+    "datastore_iso":               "{{env `packer_datastoreISO`}}",
+    "network":                     "{{env `packer_network`}}",
+    "winrmUser":                   "{{env `packer_winrmUser`}}",
+    "winrmPass":                   "{{env `packer_winrmPass`}}"
+  },
   "builders": [
     {
-      "name":                      "Utrecht",
       "type":                      "vsphere-iso",
 
-      "vcenter_server":            "nl-utc-p-mgt-01.nl.mdb-lab.com",
-      "username":                  "{{user `username`}}",
-      "password":                  "{{user `password`}}",
+      "vcenter_server":            "{{user `vcenter`}}",
+      "username":                  "{{user `vcenterUser`}}",
+      "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "{{env `packer_vmName`}}",
+      "vm_name":                   "{{user `vmName`}}",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
@@ -21,7 +32,7 @@
       "RAM":                       8192,
       "RAM_reserve_all":           true,
       
-      "datastore":                 "vsanDatastore",
+      "datastore":                 "{{user `datastore`}}",
       "disk_controller_type":      "pvscsi",
       "storage": [
         {
@@ -46,8 +57,8 @@
       ],
 
       "communicator":              "winrm",
-      "winrm_username":            "{{user `winrm_username`}}",
-      "winrm_password":            "{{user `winrm_password`}}"
+      "winrm_username":            "{{user `winrmUser`}}",
+      "winrm_password":            "{{user `winrmPass`}}"
     }
   ],
   "provisioners": [
