@@ -45,10 +45,11 @@ install_powercli:
     - Write-Host "Importing the helper module"
     - Import-Module VMware.VimAutomation.HorizonView
     - Write-Host "Installing PowerCLI Example scripts"
-    - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath', 'User')
+    - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0]
     - Write-Host "The location is " + $modulePath
+    - if (Test-Path $env:Temp\PowerCLI-Example-Scripts){Remove-Item $env:Temp\PowerCLI-Example-Scripts -Recurse -Confirm:$false}
     - git clone $exampleScriptURL $env:Temp\PowerCLI-Example-Scripts
-    - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts\Modules\VMware.Hv.Helper $modulePath
+    - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts\Modules\VMware.Hv.Helper ([Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0])
 
 recompose_pool:
   stage: recompose
