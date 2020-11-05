@@ -30,6 +30,7 @@ retrieve_vault_password:
     - $result = Invoke-RestMethod -Headers @{"X-Vault-Token" = ${env:VAULT_TOKEN}} -Method Get -Body $json -Uri ${env:VAULT_ADDR}/v1/creds/users/misc/administrator
     - $pass = $result.data.Password
     - Write-Host "Updating Autounattend.xml file with Administrator password"
+    - (Get-Content $xmlFile -Raw) -replace '{{password}}',$pass | Set-Content $xmlFile
 
 deploy_windows-10:
   stage: deploy
