@@ -46,7 +46,9 @@ install_powercli:
     - Import-Module VMware.VimAutomation.HorizonView
     - if (Test-Path $env:Temp\PowerCLI-Example-Scripts){Remove-Item $env:Temp\PowerCLI-Example-Scripts -Recurse -Force -Confirm:$false}
     - git clone $exampleScriptURL $env:Temp\PowerCLI-Example-Scripts
-    - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts\Modules\VMware.Hv.Helper ([Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0])
+    - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0]
+    - if (Test-Path $modulePath\PowerCLI-Example-Scripts){Remove-Item $modulePath\PowerCLI-Example-Scripts -Recurse -Force -Confirm:$false}
+    - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts\Modules\VMware.Hv.Helper $modulePath
 
 recompose_pool:
   stage: recompose
