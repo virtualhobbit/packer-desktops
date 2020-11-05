@@ -48,7 +48,7 @@ install_powercli:
     - git clone $exampleScriptURL $env:Temp\PowerCLI-Example-Scripts
     - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0]
     - if (Test-Path $modulePath\PowerCLI-Example-Scripts){Remove-Item $modulePath\PowerCLI-Example-Scripts -Recurse -Force -Confirm:$false}
-    - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts\Modules\VMware.Hv.Helper $modulePath
+    - Copy-Item -Recurse $env:Temp\PowerCLI-Example-Scripts $modulePath
 
 recompose_pool:
   stage: recompose
