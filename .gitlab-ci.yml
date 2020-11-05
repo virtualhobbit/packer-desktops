@@ -1,5 +1,6 @@
 stages:
   - build
+  - retrieve
   - deploy
   - powercli
   - recompose
@@ -10,7 +11,7 @@ before_script:
 get_packer:
   stage: build
   tags: 
-  - windows
+    - windows
   artifacts:
     paths:
     - packer.exe
@@ -20,10 +21,20 @@ get_packer:
     - Invoke-WebRequest -Uri ($packerURL + "/" + $packerVersion + "/" + $packerFile) -OutFile $packerFile
     - Expand-Archive $packerFile -DestinationPath .
 
+retrieve_vault_password:
+  stage: retrieve
+  tags:
+    - windows
+  script:
+    - Write-Host "Retrieving Administrator password from Vault"
+    - $result = Invoke-RestMethod -Headers @{"X-Vault-Token" = ${env:VAULT_TOKEN}} -Method Get -Body $json -Uri ${env:VAULT_ADDR}/v1/creds/users/misc/administrator
+    - $pass = $result.data.Password
+    - Write-Host "Updating Autounattend.xml file with Administrator password"
+
 deploy_windows-10:
   stage: deploy
   tags:
-  - windows
+    - windows
   script:
     - Write-Host "Deploying Windows 10"
     - cd windows-10
@@ -32,7 +43,7 @@ deploy_windows-10:
 install_powercli:
   stage: powercli
   tags:
-  - windows
+    - windows
   script:
     - Write-Host "Installing NuGet"
     - Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
@@ -53,7 +64,7 @@ install_powercli:
 recompose_pool:
   stage: recompose
   tags:
-  - windows
+    - windows
   script:
     - Write-Host "Connecting to Horizon"
     - Connect-HVServer -Server $cs -User $csUser -Password $csPass -Domain $csDomain
