@@ -57,6 +57,6 @@ recompose_pool:
   script:
     - Write-Host "Connecting to Horizon"
     - $hvServer = Connect-HVServer -Server $cs -User $csUser -Password $csPass -Domain $csDomain
-    - Get-HVPool $poolName
+    - Start-HVPool -Pool $poolName -Recompose -LogoffSetting FORCE_LOGOFF -ParentVM "$packer_vmName" -SnapshotVM "Created by Packer" -StopOnFirstError $true
     - Write-Host "Disconnecting to Horizon"
     - Disconnect-HVServer -Server $cs -Confirm:$false
