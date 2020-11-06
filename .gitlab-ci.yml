@@ -1,15 +1,15 @@
 stages:
-  - build
+  - get
   - retrieve
-  - deploy
-  - powercli
+  - build
+  - install
   - recompose
 
 before_script:
   - git config --global http.sslVerify false
 
 get_packer:
-  stage: build
+  stage: get
   tags: 
     - windows
   artifacts:
@@ -36,7 +36,7 @@ retrieve_vault_password:
     - (Get-Content $xmlFile -Raw) -replace '{{password}}',$pass | Set-Content $xmlFile
 
 deploy_windows-10:
-  stage: deploy
+  stage: build
   tags:
     - windows
   script:
@@ -46,7 +46,7 @@ deploy_windows-10:
     - ../packer.exe build -force windows-10-pilot.json
 
 install_powercli:
-  stage: powercli
+  stage: install
   tags:
     - windows
   script:
