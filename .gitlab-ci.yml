@@ -40,7 +40,6 @@ deploy_windows-10:
   tags:
     - windows
   script:
-    - (Get-Content $xmlFile -Raw)
     - Write-Host "Deploying Windows 10"
     - Set-Location windows-10
     - ../packer.exe build -force windows-10-pilot.json
