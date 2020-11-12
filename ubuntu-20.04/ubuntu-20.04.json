@@ -1,0 +1,85 @@
+{
+  "variables": {
+    "vcenter":                     "{{env `packer_vcenter`}}",
+    "vcenterUser":                 "{{env `packer_vcenterUser`}}",
+    "vcenterPass":                 "{{env `packer_vcenterPass`}}",
+    "vmName":                      "{{env `packer_vmName`}}",
+    "cluster":                     "{{env `packer_cluster`}}",
+    "datastore":                   "{{env `packer_datastore`}}",
+    "datastore_iso":               "{{env `packer_datastoreISO`}}",
+    "network":                     "{{env `packer_network`}}",
+    "sshUser":                     "{{vault `creds/users/misc/root` `Username`}}",
+    "sshPass":                     "{{vault `creds/users/misc/root` `Password`}}"
+  },
+  "builders": [
+    {
+      "type":                      "vsphere-iso",
+  
+      "vcenter_server":            "{{user `vcenter`}}",
+      "username":                  "{{user `vcenterUser`}}",
+      "password":                  "{{user `vcenterPass`}}",
+      "insecure_connection":       true,
+  
+      "vm_name":                   "{{user `vmName`}}",
+      "vm_version":                15,
+      "guest_os_type":             "ubuntu64Guest",
+      "boot_order":                "disk,cdrom",
+      "create_snapshot":           true,
+      "convert_to_template":       false,
+  
+      "cluster":                   "{{user `cluster`}}",
+      "CPUs":                      2,
+      "RAM":                       8192,
+        
+      "datastore":                 "{{user `datastore`}}",
+      "disk_controller_type":      "pvscsi",
+      "storage": [
+        {
+          "disk_size":             51200,
+          "disk_thin_provisioned": true
+        }
+      ],
+      "iso_paths":                 "[{{user `datastore_iso`}}] ubuntu-20.04.1-desktop-amd64.iso",
+      "floppy_files": [
+        "{{template_dir}}/setup/"
+      ],
+      "remove_cdrom":              true,
+        
+      "network_adapters": [
+        {
+          "network":               "{{user `network`}}",
+          "network_card":          "vmxnet3"
+        }
+      ],
+
+      "notes":                     "Base OS, VMware Tools, patched up to {{isotime \"20060102\"}}",
+
+      "boot_command": [
+        " <wait><enter><wait>",
+        "<f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs>",
+        "/casper/vmlinuz ",
+        "initrd=/casper/initrd ",
+        "autoinstall ",
+        "ds=nocloud-net;s=http://172.17.20.81/ ",
+        "<enter>"
+      ],
+      "shutdown_command":         "sudo systemctl poweroff",
+
+
+      "communicator":              "ssh",
+      "ssh_username":              "{{user `sshUser`}}",
+      "ssh_password":              "{{user `sshPass`}}",
+
+      "http_directory":          "../setup"
+    }
+  ]
+}
