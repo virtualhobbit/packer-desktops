@@ -11,7 +11,7 @@
     "network":                     "{{env `packer_network`}}",
     "winrmUser":                   "{{vault `creds/users/misc/administrator` `Username`}}",
     "winrmPass":                   "{{vault `creds/users/misc/administrator` `Password`}}"
-  },
+  },  
   "builders": [
     {
       "type":                      "vsphere-iso",
@@ -21,18 +21,18 @@
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "Windows 10 (LC) (2004) (PILOT)",
+      "vm_name":                   "Windows 10 (LC) (1903) (PROVISIONING)",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
       "create_snapshot":           true,
       "convert_to_template":       false,
-
+      
       "cluster":                   "{{user `cluster`}}",
       "CPUs":                      2,
       "RAM":                       8192,
       "RAM_reserve_all":           true,
-      
+
       "datastore":                 "{{user `datastore_NL`}}",
       "disk_controller_type":      "pvscsi",
       "storage": [
@@ -42,14 +42,14 @@
         }
       ],
       "iso_paths": [
-        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
-        "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.0-16938113"
+        "[{{user `datastore_iso`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
+        "[{{user `datastore_iso`}}] VMware-tools-windows-11.1.0-16036546.iso"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"
       ],
       "remove_cdrom":              true,
-      
+
       "network_adapters": [
         {
           "network":               "{{user `network`}}",
@@ -82,11 +82,7 @@
     {
       "type":                      "powershell",
       "scripts": [
-        "{{template_dir}}/setup/certs.ps1",
-        "{{template_dir}}/setup/bginfo.ps1",
-        "{{template_dir}}/setup/agent.ps1",
-        "{{template_dir}}/setup/dem.ps1",
-        "{{template_dir}}/setup/appvolumes.ps1"
+        "{{template_dir}}/setup/certs.ps1"
       ]
     },
     {
@@ -94,25 +90,9 @@
       "restart_timeout":           "30m"
     },
     {
-      "type":                      "windows-update",
-      "search_criteria":           "IsInstalled=0",
-      "filters": [
-        "exclude:$_.Title -like '*Preview*'",
-        "exclude:$_.Title -like '*KB4579311*'",
-        "include:$true"
-      ]
-    },
-    {
-      "type":                      "powershell",
-      "scripts": [
-        "{{template_dir}}/setup/osot.ps1",
-        "{{template_dir}}/setup/sdelete.ps1"
-      ]
-    },
-    {
       "type":                      "powershell",
       "inline": [
-        "Get-EventLog -LogName * | ForEach { Clear-EventLog -LogName $_ }"
+        "Get-EventLog -LogName * | ForEach { Clear-EventLog $_.Log }"
       ]
     }
   ]
