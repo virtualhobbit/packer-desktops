@@ -14,6 +14,7 @@
   },
   "builders": [
     {
+      "name":                      "Utrecht",
       "type":                      "vsphere-iso",
 
       "vcenter_server":            "{{user `vcenter_NL`}}",
@@ -43,7 +44,7 @@
       ],
       "iso_paths": [
         "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
-        "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.0-16938113"
+        "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.0-16938113.iso"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"
