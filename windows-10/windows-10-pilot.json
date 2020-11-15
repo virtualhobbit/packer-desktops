@@ -1,12 +1,13 @@
 {
   "variables": {
-    "vcenter":                     "{{env `packer_vcenter`}}",
+    "vcenter_NL":                  "{{env `packer_vcenter_NL`}}",
+    "vcenter_UK":                  "{{env `packer_vcenter_UK`}}",
     "vcenterUser":                 "{{env `packer_vcenterUser`}}",
     "vcenterPass":                 "{{env `packer_vcenterPass`}}",
-    "vmName":                      "{{env `packer_vmName`}}",
     "cluster":                     "{{env `packer_cluster`}}",
-    "datastore":                   "{{env `packer_datastore`}}",
-    "datastore_iso":               "{{env `packer_datastoreISO`}}",
+    "datastore_NL":                "{{env `packer_datastore_NL`}}",
+    "datastore_UK":                "{{env `packer_datastore_UK`}}",
+    "datastoreISO":               "{{env `packer_datastoreISO`}}",
     "network":                     "{{env `packer_network`}}",
     "winrmUser":                   "{{vault `creds/users/misc/administrator` `Username`}}",
     "winrmPass":                   "{{vault `creds/users/misc/administrator` `Password`}}"
@@ -15,12 +16,12 @@
     {
       "type":                      "vsphere-iso",
 
-      "vcenter_server":            "{{user `vcenter`}}",
+      "vcenter_server":            "{{user `vcenter_NL`}}",
       "username":                  "{{user `vcenterUser`}}",
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "{{user `vmName`}}",
+      "vm_name":                   "Windows 10 (LC) (2004) (PILOT)",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
@@ -32,7 +33,7 @@
       "RAM":                       8192,
       "RAM_reserve_all":           true,
       
-      "datastore":                 "{{user `datastore`}}",
+      "datastore":                 "{{user `datastore_NL`}}",
       "disk_controller_type":      "pvscsi",
       "storage": [
         {
@@ -41,8 +42,8 @@
         }
       ],
       "iso_paths": [
-        "[{{user `datastore_iso`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
-        "[{{user `datastore_iso`}}] VMware-tools-windows-11.2.0-16938113"
+        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
+        "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.0-16938113"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"

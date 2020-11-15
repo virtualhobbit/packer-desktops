@@ -1,18 +1,17 @@
 {
   "variables": {
     "vcenter_NL":                  "{{env `packer_vcenter_NL`}}",
-    "vcenter_UK":                  "{{env `packer_vcenter_UK`}}",    
+    "vcenter_UK":                  "{{env `packer_vcenter_UK`}}",
     "vcenterUser":                 "{{env `packer_vcenterUser`}}",
     "vcenterPass":                 "{{env `packer_vcenterPass`}}",
-    "vmName":                      "{{env `packer_vmName`}}",
     "cluster":                     "{{env `packer_cluster`}}",
     "datastore_NL":                "{{env `packer_datastore_NL`}}",
     "datastore_UK":                "{{env `packer_datastore_UK`}}",
-    "datastore_iso":               "{{env `packer_datastoreISO`}}",
+    "datastoreISO":               "{{env `packer_datastoreISO`}}",
     "network":                     "{{env `packer_network`}}",
     "winrmUser":                   "{{vault `creds/users/misc/administrator` `Username`}}",
     "winrmPass":                   "{{vault `creds/users/misc/administrator` `Password`}}"
-  },  
+  },
     "builders": [
     {
       "name":                      "Utrecht",
@@ -23,7 +22,7 @@
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "{{user `vmName`}}",
+      "vm_name":                   "Windows 10 (LC) (1903)",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
@@ -44,8 +43,8 @@
         }
       ],
       "iso_paths": [
-        "[{{user `datastore_iso`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
-        "[{{user `datastore_iso`}}] VMware-tools-windows-11.1.0-16036546.iso"
+        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
+        "[{{user `datastoreISO`}}] VMware-tools-windows-11.1.0-16036546.iso"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"
@@ -72,7 +71,7 @@
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "{{user `vmName`}}",
+      "vm_name":                   "Windows 10 (LC) (1903)",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
@@ -93,8 +92,8 @@
         }
       ],
       "iso_paths": [
-        "[{{user `datastore_iso`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
-        "[{{user `datastore_iso`}}] VMware-tools-windows-11.1.0-16036546.iso"
+        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
+        "[{{user `datastoreISO`}}] VMware-tools-windows-11.1.0-16036546.iso"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"
