@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 $webserver = "intranet.mdb-lab.com"
 $url = "http://" + $webserver
-$installer = "VMware-Horizon-Agent-x86_64-7.12.0-15805436.exe"
+$installer = "VMware-Horizon-Agent-x86_64-7.13.0-16975066.exe"
 $listConfig = "/s /v ""/qn REBOOT=ReallySuppress ADDLOCAL=Core,SVIAgent,RTAV,ClientDriveRedirection,V4V,VmwVaudio,PerfTracker"""
 
 # Verify connectivity
