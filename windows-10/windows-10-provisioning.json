@@ -9,8 +9,8 @@
     "datastore_UK":                "{{env `packer_datastore_UK`}}",
     "datastoreISO":                "{{env `packer_datastoreISO`}}",
     "network":                     "{{env `packer_network`}}",
-    "winrmUser":                   "{{vault `creds/users/misc/administrator` `Username`}}",
-    "winrmPass":                   "{{vault `creds/users/misc/administrator` `Password`}}"
+    "winrmUser":                   "{{vault `credentials/users/misc/administrator` `Username`}}",
+    "winrmPass":                   "{{vault `credentials/users/misc/administrator` `Password`}}"
   },  
   "builders": [
     {
@@ -44,7 +44,7 @@
       ],
       "iso_paths": [
         "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
-        "[{{user `datastoreISO`}}] VMware-tools-windows-11.1.0-16036546.iso"
+        "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.1-17243207.iso"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"
