@@ -35,7 +35,7 @@ retrieve_vault_password:
     - Write-Host "Updating Autounattend.xml file with Administrator password"
     - (Get-Content $xmlFile -Raw) -replace '{{password}}',$pass | Set-Content $xmlFile
 
-deploy_windows-10:
+build_windows-10:
   stage: build
   tags:
     - windows
