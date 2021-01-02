@@ -9,8 +9,8 @@
     "datastore_UK":                "{{env `packer_datastore_UK`}}",
     "datastoreISO":                "{{env `packer_datastoreISO`}}",
     "network":                     "{{env `packer_network`}}",
-    "winrmUser":                   "{{vault `creds/users/misc/administrator` `Username`}}",
-    "winrmPass":                   "{{vault `creds/users/misc/administrator` `Password`}}"
+    "winrmUser":                   "{{vault `credentials/users/misc/administrator` `Username`}}",
+    "winrmPass":                   "{{vault `credentials/users/misc/administrator` `Password`}}"
   },
   "builders": [
     {
