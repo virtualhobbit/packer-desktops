@@ -101,6 +101,7 @@
       "filters": [
         "exclude:$_.Title -like '*Preview*'",
         "exclude:$_.Title -like '*KB4579311*'",
+        "exclude:$_.Title -like '*KB4592438*'",
         "include:$true"
       ]
     },
