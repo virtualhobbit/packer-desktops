@@ -64,7 +64,7 @@ install_powercli:
     - Expand-Archive -Path $env:Temp\powercli.zip -DestinationPath $modulePath
     - Get-ChildItem -Path $modulePath -Recurse | Unblock-File
     - sleep 60
-    - Get-Module -Name VMware* -ListAvaillable
+    - Get-Module -Name VMware* -ListAvailable
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -InvalidCertificateAction Ignore -Confirm:$false
     - Write-Host "Importing the helper module"
     - Import-Module VMware.VimAutomation.HorizonView
