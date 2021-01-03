@@ -56,6 +56,7 @@ install_powercli:
     - Write-Host "Installing PowerCLI"
     - Install-Module -Name VMware.PowerCLI -Scope CurrentUser -Confirm:$false
     - sleep 60
+    - Get-Module -Name VMware.*
     - Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -InvalidCertificateAction Ignore -Confirm:$false
     - Write-Host "Importing the helper module"
     - Import-Module VMware.VimAutomation.HorizonView
