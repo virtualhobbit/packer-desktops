@@ -50,10 +50,7 @@ install_powercli:
     - windows
   script:
     - Write-Host "Calculating module path"
-    - $allPaths =  [Environment]::GetEnvironmentVariable('PSModulePath').split(";")
-    - echo $allPaths
     - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0]
-    - echo $modulePath
     - Write-Host "Installing NuGet"
     - Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
     - Write-Host "Set the repo installation policy"
@@ -61,6 +58,7 @@ install_powercli:
     - Write-Host "Fetching PowerCLI"
     - Invoke-WebRequest https://vdc-download.vmware.com/vmwb-repository/dcr-public/2802fdb1-bca3-4875-b76f-901cb15c2b2a/509b4a98-5ee5-4048-9407-28b9f85ba65c/VMware-PowerCLI-12.0.0-15947286.zip -Outfile $env:Temp\powercli.zip
     - Write-Host "Installing PowerCLI"
+    - if (Test-Path $modulePath\*.*){Remove-Item $modulePath\*.* -Recurse -Force -Confirm:$false}
     - Expand-Archive -Path $env:Temp\powercli.zip -DestinationPath $modulePath
     - Get-ChildItem -Path $modulePath -Recurse | Unblock-File
     - sleep 60

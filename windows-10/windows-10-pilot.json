@@ -96,6 +96,23 @@
       "restart_timeout":           "30m"
     },
     {
+      "type":                      "windows-update",
+      "search_criteria":           "IsInstalled=0",
+      "filters": [
+        "exclude:$_.Title -like '*Preview*'",
+        "exclude:$_.Title -like '*KB4579311*'",
+        "exclude:$_.Title -like '*KB4592438*'",
+        "include:$true"
+      ]
+    },
+    {
+      "type":                      "powershell",
+      "scripts": [
+        "{{template_dir}}/setup/osot.ps1",
+        "{{template_dir}}/setup/sdelete.ps1"
+      ]
+    },
+    {
       "type":                      "powershell",
       "inline": [
         "Get-EventLog -LogName * | ForEach { Clear-EventLog -LogName $_ }"
