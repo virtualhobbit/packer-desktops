@@ -57,7 +57,7 @@ install_powercli:
     - Write-Host "Set the repo installation policy"
     - Set-PSRepository PSGallery -InstallationPolicy Trusted
     - Write-Host "Fetching PowerCLI"
-    - Invoke-WebRequest https://vdc-download.vmware.com/vmwb-repository/dcr-public/2802fdb1-bca3-4875-b76f-901cb15c2b2a/509b4a98-5ee5-4048-9407-28b9f85ba65c/VMware-PowerCLI-12.0.0-15947286.zip- Outfile $env:Temp\powercli.zip
+    - Invoke-WebRequest https://vdc-download.vmware.com/vmwb-repository/dcr-public/2802fdb1-bca3-4875-b76f-901cb15c2b2a/509b4a98-5ee5-4048-9407-28b9f85ba65c/VMware-PowerCLI-12.0.0-15947286.zip -Outfile $env:Temp\powercli.zip
     - Write-Host "Installing PowerCLI"
     - Expand-Archive -Path $env:Temp\powercli.zip -DestinationPath $modulePath
     - sleep 60
