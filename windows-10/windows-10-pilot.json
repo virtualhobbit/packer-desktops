@@ -15,7 +15,7 @@
   },
   "builders": [
     {
-      "name":                      "Utrecht",
+      "name":                      "Utrecht", 
       "type":                      "vsphere-iso",
 
       "vcenter_server":            "{{user `vcenter_NL`}}",
