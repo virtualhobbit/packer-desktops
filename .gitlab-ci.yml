@@ -54,6 +54,7 @@ install_powercli:
     - Write-Host "Set the repo installation policy"
     - Set-PSRepository PSGallery -InstallationPolicy Trusted
     - Write-Host "Installing PowerCLI"
+    - $ENV:PSModulePath.Split(";")
     - Install-Module -Name VMware.PowerCLI -Scope CurrentUser -Confirm:$false
     - sleep 60
     - Get-Module -Name VMware.*
