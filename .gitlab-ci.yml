@@ -5,6 +5,8 @@ stages:
   - install
   - recompose
 
+image: powershell
+
 before_script:
   - git config --global http.sslVerify false
 
