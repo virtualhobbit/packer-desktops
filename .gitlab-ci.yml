@@ -11,7 +11,7 @@ before_script:
 get_packer:
   stage: get
   tags: 
-    - windows
+    - powershell
   artifacts:
     paths:
     - packer.exe
@@ -24,7 +24,7 @@ get_packer:
 retrieve_vault_password:
   stage: retrieve
   tags:
-    - windows
+    - powershell
   artifacts:
     paths:
     - windows-10/setup/Autounattend.xml
@@ -38,7 +38,7 @@ retrieve_vault_password:
 build_windows-10:
   stage: build
   tags:
-    - windows
+    - powershell
   script:
     - Write-Host "Deploying Windows 10"
     - Set-Location windows-10
@@ -47,7 +47,7 @@ build_windows-10:
 install_powercli:
   stage: install
   tags:
-    - windows
+    - powershell
   script:
     - Write-Host "Calculating module path"
     - $modulePath = [Environment]::GetEnvironmentVariable('PSModulePath').split(";")[0]
@@ -73,7 +73,7 @@ install_powercli:
 recompose_pool:
   stage: recompose
   tags:
-    - windows
+    - powershell
   script:
     - Write-Host "Connecting to Horizon"
     - Connect-HVServer -Server $cs -User $csUser -Password $csPass -Domain $csDomain
