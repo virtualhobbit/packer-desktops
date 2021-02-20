@@ -1,29 +1,28 @@
 {
   "variables": {
-    "vcenter_NL":                  "{{env `packer_vcenter_NL`}}",
-    "vcenter_UK":                  "{{env `packer_vcenter_UK`}}",
+    "vcenterNL":                   "{{env `packer_vcenterNL`}}",
+    "vcenterUK":                   "{{env `packer_vcenterUK`}}",
     "vcenterUser":                 "{{env `packer_vcenterUser`}}",
     "vcenterPass":                 "{{env `packer_vcenterPass`}}",
     "cluster":                     "{{env `packer_cluster`}}",
-    "datastore_NL":                "{{env `packer_datastore_NL`}}",
-    "datastore_UK":                "{{env `packer_datastore_UK`}}",
+    "datastoreNL":                 "{{env `packer_datastoreNL`}}",
+    "datastoreUK":                 "{{env `packer_datastoreUK`}}",
     "datastoreISO":                "{{env `packer_datastoreISO`}}",
     "network":                     "{{env `packer_network`}}",
-    "vmName":                      "{{env `packer_vmName`}}",
     "winrmUser":                   "{{vault `credentials/users/misc/administrator` `Username`}}",
     "winrmPass":                   "{{vault `credentials/users/misc/administrator` `Password`}}"
   },
-    "builders": [
+  "builders": [
     {
       "name":                      "Utrecht",
       "type":                      "vsphere-iso",
       
-      "vcenter_server":            "{{user `vcenter_NL`}}",
+      "vcenter_server":            "{{user `vcenterNL`}}",
       "username":                  "{{user `vcenterUser`}}",
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "{{user `vmName`}}",
+      "vm_name":                   "Windows 10 (LC) (2004)",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
@@ -35,7 +34,7 @@
       "RAM":                       8192,
       "RAM_reserve_all":           true,
       
-      "datastore":                 "{{user `datastore_NL`}}",
+      "datastore":                 "{{user `datastoreNL`}}",
       "disk_controller_type":      "pvscsi",
       "storage": [
         {
@@ -44,7 +43,7 @@
         }
       ],
       "iso_paths": [
-        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_may_2020_x64_dvd_783c55e0.iso",
+        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_feb_2021_x64_dvd_b8a04bec.iso",
         "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.1-17243207.iso"
       ],
       "floppy_files": [
@@ -59,6 +58,8 @@
         }
       ],      
 
+      "notes":                     "Base OS, VMware Tools, patched up to {{isotime \"20060102\"}}",
+
       "communicator":              "winrm",
       "winrm_username":            "{{user `winrmUser`}}",
       "winrm_password":            "{{user `winrmPass`}}"
@@ -67,7 +68,7 @@
       "name":                      "Southport",
       "type":                      "vsphere-iso",
 
-      "vcenter_server":            "{{user `vcenter_UK`}}",
+      "vcenter_server":            "{{user `vcenterUK`}}",
       "username":                  "{{user `vcenterUser`}}",
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
@@ -84,7 +85,7 @@
       "RAM":                       8192,
       "RAM_reserve_all":           true,
       
-      "datastore":                 "{{user `datastore_UK`}}",
+      "datastore":                 "{{user `datastoreUK`}}",
       "disk_controller_type":      "pvscsi",
       "storage": [
         {
@@ -106,7 +107,9 @@
           "network":               "{{user `network`}}",
           "network_card":          "vmxnet3"
         }
-      ],      
+      ],
+
+      "notes":                     "Base OS, VMware Tools, patched up to {{isotime \"20060102\"}}",
 
       "communicator":              "winrm",
       "winrm_username":            "{{user `winrmUser`}}",
