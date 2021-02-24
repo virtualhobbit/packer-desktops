@@ -69,7 +69,7 @@
       "inline": [
         "powercfg.exe /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
         "Get-AppXPackage -AllUsers | Where {($_.name -notlike \"Photos\") -and ($_.Name -notlike \"Calculator\") -and ($_.Name -notlike \"Store\")} | Remove-AppXPackage -ErrorAction SilentlyContinue",
-        "Get-AppXProvisionedPackage -Online | Where {($_.DisplayName -notlike \"Photos\") -and ($_.DisplayName -notlike \"Calculator\") -and ($_.DisplayName -notlike \"Store\")} | Remove-AppXProvisionedPackage -Online -ErrorAction SilentlyContinue"     
+        "Get-AppXProvisionedPackage -Online | Where {($_.DisplayName -notlike \"Photos\") -and ($_.DisplayName -notlike \"Calculator\") -and ($_.DisplayName -notlike \"Store\")} | Remove-AppXProvisionedPackage -Online -ErrorAction SilentlyContinue"
       ]
     },
     {
@@ -86,7 +86,6 @@
         "{{template_dir}}/setup/certs.ps1",
         "{{template_dir}}/setup/bginfo.ps1",
         "{{template_dir}}/setup/agent.ps1",
-        "{{template_dir}}/setup/dem.ps1",
         "{{template_dir}}/setup/appvolumes.ps1"
       ]
     },
