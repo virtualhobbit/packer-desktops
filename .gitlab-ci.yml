@@ -31,6 +31,7 @@ retrieve_vault_password:
     paths:
     - windows-10/setup/Autounattend.xml
   script:
+    - $xmlFile = "windows-10/setup/Autounattend.xml"
     - Write-Host "Retrieving Administrator password from Vault"
     - $result = Invoke-RestMethod -Headers @{"X-Vault-Token" = ${env:VAULT_TOKEN}} -Method Get -Body $json -Uri ${env:VAULT_ADDR}/v1/credentials/users/misc/administrator
     - $pass = $result.data.Password
