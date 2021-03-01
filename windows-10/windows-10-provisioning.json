@@ -74,14 +74,6 @@
     },
     {
       "type":                      "powershell",
-      "elevated_user":             "{{user `winrmUser`}}",
-      "elevated_password":         "{{user `winrmPass`}}",
-      "inline": [
-        "Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online"
-      ]
-    },
-    {
-      "type":                      "powershell",
       "scripts": [
         "{{template_dir}}/setup/certs.ps1",
         "{{template_dir}}/setup/appvolumes.ps1"
