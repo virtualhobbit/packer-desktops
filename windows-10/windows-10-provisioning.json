@@ -33,6 +33,7 @@
       "CPUs":                      2,
       "RAM":                       8192,
       "RAM_reserve_all":           true,
+      "video_ram":                 128000,
 
       "datastore":                 "{{user `datastoreNL`}}",
       "disk_controller_type":      "pvscsi",
@@ -44,7 +45,7 @@
       ],
       "iso_paths": [
         "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_feb_2021_x64_dvd_b8a04bec.iso",
-        "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.1-17243207.iso"
+        "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.5-17337674.iso"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"
@@ -58,6 +59,8 @@
         }
       ],
 
+      "notes":                     "Base OS, VMware Tools, patched up to {{isotime \"20060102\"}}",
+      
       "communicator":              "winrm",
       "winrm_username":            "{{user `winrmUser`}}",
       "winrm_password":            "{{user `winrmPass`}}"
