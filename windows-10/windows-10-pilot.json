@@ -59,6 +59,8 @@
         }
       ],
 
+      "notes":                     "Base OS, VMware Tools, patched up to {{isotime \"20060102\"}}",
+
       "communicator":              "winrm",
       "winrm_username":            "{{user `winrmUser`}}",
       "winrm_password":            "{{user `winrmPass`}}"
