@@ -1,26 +1,28 @@
 {
   "variables": {
-    "vcenter":                     "{{env `packer_vcenter`}}",
+    "vcenterNL":                   "{{env `packer_vcenterNL`}}",
+    "vcenterUK":                   "{{env `packer_vcenterUK`}}",
     "vcenterUser":                 "{{env `packer_vcenterUser`}}",
     "vcenterPass":                 "{{env `packer_vcenterPass`}}",
-    "vmName":                      "{{env `packer_vmName`}}",
     "cluster":                     "{{env `packer_cluster`}}",
-    "datastore":                   "{{env `packer_datastore`}}",
-    "datastore_iso":               "{{env `packer_datastoreISO`}}",
+    "datastoreNL":                 "{{env `packer_datastoreNL`}}",
+    "datastoreUK":                 "{{env `packer_datastoreUK`}}",
+    "datastoreISO":                "{{env `packer_datastoreISO`}}",
     "network":                     "{{env `packer_network`}}",
-    "sshUser":                     "{{vault `creds/users/misc/root` `Username`}}",
-    "sshPass":                     "{{vault `creds/users/misc/root` `Password`}}"
+    "sshUser":                     "{{vault `credentials/users/misc/root` `Username`}}",
+    "sshPass":                     "{{vault `credentials/users/misc/root` `Password`}}"
   },
   "builders": [
     {
+      "name":                      "Utrecht",
       "type":                      "vsphere-iso",
   
-      "vcenter_server":            "{{user `vcenter`}}",
+      "vcenter_server":            "{{user `vcenterNL`}}",
       "username":                  "{{user `vcenterUser`}}",
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
   
-      "vm_name":                   "{{user `vmName`}}",
+      "vm_name":                   "Ubuntu 20.04",
       "vm_version":                15,
       "guest_os_type":             "ubuntu64Guest",
       "boot_order":                "disk,cdrom",
@@ -31,7 +33,7 @@
       "CPUs":                      2,
       "RAM":                       8192,
         
-      "datastore":                 "{{user `datastore`}}",
+      "datastore":                 "{{user `datastoreNL`}}",
       "disk_controller_type":      "pvscsi",
       "storage": [
         {
@@ -39,10 +41,12 @@
           "disk_thin_provisioned": true
         }
       ],
-      "iso_paths":                 "[{{user `datastore_iso`}}] ubuntu-20.04.1-desktop-amd64.iso",
-      "floppy_files": [
-        "{{template_dir}}/setup/"
+      "iso_paths":                 "[{{user `datastoreISO`}}] ubuntu-20.04.2-live-server-amd64.iso",
+      "cd_files": [
+        "{{template_dir}}/setup/user-data",
+        "{{template_dir}}/setup/meta-data"
       ],
+      "cd_label":                  "cidata",
       "remove_cdrom":              true,
         
       "network_adapters": [
@@ -54,32 +58,18 @@
 
       "notes":                     "Base OS, VMware Tools, patched up to {{isotime \"20060102\"}}",
 
+      "boot_wait": "2s",
       "boot_command": [
-        " <wait><enter><wait>",
-        "<f6><esc>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-        "<bs><bs><bs>",
-        "/casper/vmlinuz ",
-        "initrd=/casper/initrd ",
-        "autoinstall ",
-        "ds=nocloud-net;s=http://172.17.20.81/ ",
-        "<enter>"
+        "<enter><wait2>",
+        "<enter><wait>",
+        "<f6><esc><wait> ",
+        "autoinstall ds=nocloud;"
       ],
-      "shutdown_command":         "sudo systemctl poweroff",
-
+      "shutdown_command":          "sudo systemctl poweroff",
 
       "communicator":              "ssh",
-      "ssh_username":              "{{user `sshUser`}}",
-      "ssh_password":              "{{user `sshPass`}}",
-
-      "http_directory":          "../setup"
+      "ssh_username":              "sa_packer",
+      "ssh_password":              "P@ssw0rd.1"
     }
   ]
 }

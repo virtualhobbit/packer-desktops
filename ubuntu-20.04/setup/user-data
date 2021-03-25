@@ -1,39 +1,30 @@
 #cloud-config
 autoinstall:
   version: 1
-  apt:
-    geoip: true
-    preserve_sources_list: false
-    primary:
-    - arches: [amd64, i386]
-      uri: http://gb.archive.ubuntu.com/ubuntu
-    - arches: [default]
-      uri: http://ports.ubuntu.com/ubuntu-ports
-  identity:
-    hostname: ubuntu2004
-    username: vagrant
-    password: '$6$wdAcoXrU039hKYPd$508Qvbe7ObUnxoj15DRCkzC3qO7edjH0VV7BPNRDYK4QR8ofJaEEF2heacn0QgD.f8pO8SNp83XNdWG6tocBM1'
-  ssh:
-    allow-pw: true
-    install-server: true
   locale: en_US
   keyboard: 
     layout: gb
   storage:
     layout:
-      name: direct
-    config:
-      - type: disk
-        id: disk0
-        match:
-          size: largest
-      - type: partition
-        id: boot-partition
-        device: disk0
-        size: 500M
-      - type: partition
-        id: root-partition
-        device: disk0
-        size: -1
+      name: lvm
+  network:
+    network:
+      version: 2
+      ethernets:
+        ens192:
+          dhcp4: true
+  users:
+    - default
+    - name: sa_packer
+      passwd: $6$rounds=4096$2wLJZqnqV$pUe.5d/NDnRJPQPgAHDZ4mWPI0HRFgFhl/ZDiGairE0EfsuPs.G3w4Npdh9QTDcqXx6EskEuLUzp0pttWtSYq0
+      ssh_pwauth: True
+  identity:
+    hostname: ubuntu2004
+  ssh:
+    allow-pw: true
+    install-server: yes
+  packages:
+  - build-essential
+  - ubuntu-desktop
   late-commands:
 
