@@ -13,13 +13,10 @@ autoinstall:
       ethernets:
         ens192:
           dhcp4: true
-  users:
-    - default
-    - name: sa_packer
-      passwd: $6$rounds=4096$2wLJZqnqV$pUe.5d/NDnRJPQPgAHDZ4mWPI0HRFgFhl/ZDiGairE0EfsuPs.G3w4Npdh9QTDcqXx6EskEuLUzp0pttWtSYq0
-      ssh_pwauth: True
   identity:
     hostname: ubuntu2004
+    username: sa_packer
+    password: $6$rounds=4096$2wLJZqnqV$pUe.5d/NDnRJPQPgAHDZ4mWPI0HRFgFhl/ZDiGairE0EfsuPs.G3w4Npdh9QTDcqXx6EskEuLUzp0pttWtSYq0
   ssh:
     allow-pw: true
     install-server: yes
