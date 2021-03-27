@@ -42,11 +42,6 @@
         }
       ],
       "iso_paths":                 "[{{user `datastoreISO`}}] ubuntu-20.04.2-live-server-amd64.iso",
-      "cd_files": [
-        "{{template_dir}}/setup/user-data",
-        "{{template_dir}}/setup/meta-data"
-      ],
-      "cd_label":                  "cidata",
       "remove_cdrom":              true,
         
       "network_adapters": [
@@ -58,12 +53,13 @@
 
       "notes":                     "Base OS, VMware Tools, patched up to {{isotime \"20060102\"}}",
 
+      "http_directory":            "{{template_dir}}/setup",
+
       "boot_wait": "2s",
       "boot_command": [
-        "<enter><wait2>",
-        "<enter><wait>",
-        "<f6><esc><wait> ",
-        "autoinstall ds=nocloud;"
+        "<enter><enter><f6><esc><wait> ",
+        "autoinstall ds=nocloud-net;seedfrom=http://{{ .HTTPIP }}:{{ .HTTPPort }}/",
+        "<enter><wait>"
       ],
       "shutdown_command":          "sudo systemctl poweroff",
 
