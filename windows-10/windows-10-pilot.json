@@ -33,7 +33,7 @@
       "CPUs":                      2,
       "RAM":                       8192,
       "RAM_reserve_all":           true,
-      "video_ram":                 128000,
+      "video_ram":                 131072,
 
       "datastore":                 "{{user `datastoreNL`}}",
       "disk_controller_type":      "pvscsi",
