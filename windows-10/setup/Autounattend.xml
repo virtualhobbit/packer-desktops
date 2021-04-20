@@ -81,7 +81,7 @@
             
             <UserAccounts>
                  <AdministratorPassword>
-                     <Value>{{password}}!</Value>
+                     <Value>{{password}}</Value>
                      <PlainText>true</PlainText>
                  </AdministratorPassword>
             </UserAccounts>
