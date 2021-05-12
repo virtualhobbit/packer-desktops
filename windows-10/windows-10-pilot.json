@@ -44,7 +44,7 @@
         }
       ],
       "iso_paths": [
-        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_20h2_x64_dvd_0837542f.iso",
+        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_20h2_updated_feb_2021_x64_dvd_0d450cea.iso",
         "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.5-17337674.iso"
       ],
       "floppy_files": [
