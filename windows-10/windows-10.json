@@ -22,7 +22,7 @@
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "Windows 10 (2004)",
+      "vm_name":                   "Windows 10 (20H2)",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
@@ -44,7 +44,7 @@
         }
       ],
       "iso_paths": [
-        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_2004_updated_feb_2021_x64_dvd_b8a04bec.iso",
+        "[{{user `datastoreISO`}}] en-gb_windows_10_business_editions_version_20h2_updated_feb_2021_x64_dvd_0d450cea.iso",
         "[{{user `datastoreISO`}}] VMware-tools-windows-11.2.5-17337674.iso"
       ],
       "floppy_files": [
