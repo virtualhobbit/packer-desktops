@@ -1,6 +1,6 @@
 stages:
   - get
-  - retrieve
+  - vault
   - build
   - install
   - recompose
@@ -24,14 +24,13 @@ get_packer:
     - Expand-Archive $packerFile -DestinationPath .
 
 retrieve_vault_password:
-  stage: retrieve
+  stage: vault
   tags:
     - powershell
   artifacts:
     paths:
-    - windows-10/setup/Autounattend.xml
+    - $xmlFile
   script:
-    - $xmlFile = "windows-10/setup/Autounattend.xml"
     - Write-Host "Retrieving Administrator password from Vault"
     - $result = Invoke-RestMethod -Headers @{"X-Vault-Token" = ${env:VAULT_TOKEN}} -Method Get -Body $json -Uri ${env:VAULT_ADDR}/v1/credentials/users/misc/administrator
     - $pass = $result.data.Password
