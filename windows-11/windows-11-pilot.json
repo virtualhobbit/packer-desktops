@@ -37,6 +37,7 @@
       "video_ram":                 131072,
 
       "datastore":                 "{{user `datastoreNL`}}",
+      "folder":                    "{{user `folder`}}",
       "disk_controller_type":      "pvscsi",
       "storage": [
         {
