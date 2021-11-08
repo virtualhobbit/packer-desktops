@@ -31,7 +31,7 @@ source "vsphere-iso" "Utrecht" {
   
   datastore               = "${var.datastoreNL}"
   folder                  = "${var.folder}"
-  disk_controller_type    = "pvscsi"
+  disk_controller_type    = ["pvscsi"]
   storage {
     disk_size             = 51200
     disk_thin_provisioned = true
