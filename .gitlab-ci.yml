@@ -44,7 +44,8 @@ build_windows-10:
   script:
     - Write-Host "Deploying Windows 10"
     - Set-Location windows-10
-    - ../packer.exe build -force windows-10-pilot.json
+    - ../packer.exe init .
+    - ../packer.exe build -force windows-10-pilot.pkr.hcl
 
 install_powercli:
   stage: install

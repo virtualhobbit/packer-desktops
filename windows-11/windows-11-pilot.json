@@ -23,7 +23,7 @@
       "password":                  "{{user `vcenterPass`}}",
       "insecure_connection":       true,
 
-      "vm_name":                   "Windows 11 (PILOT)",
+      "vm_name":                   "Windows 11 (21H2) (PILOT)",
       "vm_version":                15,
       "guest_os_type":             "windows9_64Guest",
       "boot_order":                "disk,cdrom",
@@ -41,18 +41,20 @@
       "disk_controller_type":      "pvscsi",
       "storage": [
         {
-          "disk_size":             51200,
+          "disk_size":             102400,
           "disk_thin_provisioned": true
         }
       ],
       "iso_paths": [
-        "[{{user `datastoreISO`}}] Windows11_InsiderPreview_EnterpriseVL_x64_en-gb_22454.iso",
-        "[{{user `datastoreISO`}}] VMware-tools-windows-11.3.0-18090558.iso"
+        "[{{user `datastoreISO`}}] en-gb_windows_11_business_editions_x64_dvd_47a2b04f.iso",
+        "[{{user `datastoreISO`}}] VMware-tools-windows-11.3.5-18557794.iso"
       ],
       "floppy_files": [
         "{{template_dir}}/setup/"
       ],
       "remove_cdrom":              true,
+      "firmware":                  "efi",
+      "cdrom_type":                "sata",
 
       "network_adapters": [
         {
