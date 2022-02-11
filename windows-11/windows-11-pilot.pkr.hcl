@@ -1,8 +1,8 @@
 packer {
-  required_version = ">= 1.7.4"
+  required_version = ">= 1.7.10"
   required_plugins {
     vsphere = {
-      version = ">= v1.0.2"
+      version = ">= v1.0.3"
           source  = "github.com/hashicorp/vsphere"
     }
   }
@@ -31,7 +31,7 @@ source "vsphere-iso" "Utrecht" {
 
   datastore               = "${var.datastoreNL}"
   folder                  = "${var.folder}"
-  disk_controller_type    = "pvscsi"
+  disk_controller_type    = ["pvscsi"]
   storage {
     disk_size             = 102400
     disk_thin_provisioned = true
@@ -49,13 +49,15 @@ source "vsphere-iso" "Utrecht" {
 
   video_ram               = 131072
 
+  vTPM                    = true
+
   notes                   = "Base OS, VMware Tools, patched up to ${legacy_isotime("20060102")}"
 
   boot_order              = "disk,cdrom"
 
   communicator            = "winrm"
-  winrm_password          = "${var.winrmPass}"
-  winrm_username          = "${var.winrmUser}"
+  winrm_password          = "${local.winrmPass}"
+  winrm_username          = "${local.winrmUser}"
 
   convert_to_template     = false
   create_snapshot         = true
@@ -69,15 +71,15 @@ build {
   }
 
   provisioner "powershell" {
-    elevated_password     = "${var.winrmPass}"
-    elevated_user         = "${var.winrmUser}"
+    elevated_password     = "${local.winrmPass}"
+    elevated_user         = "${local.winrmUser}"
     inline                = ["Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online"]
   }
 
   provisioner "windows-restart" {}
 
   provisioner "powershell" {
-    scripts               = ["${path.root}/setup/certs.ps1", "${path.root}/setup/bginfo.ps1", "${path.root}/setup/agent.ps1", "${path.root}/setup/appvolumes.ps1", "${path.root}/setup/fslogix.ps1"]
+    scripts               = ["${path.root}/files/certs.ps1", "${path.root}/files/bginfo.ps1", "${path.root}/files/agent.ps1", "${path.root}/files/appvolumes.ps1", "${path.root}/files/fslogix.ps1"]
   }
 
   provisioner "windows-restart" {}
@@ -88,7 +90,7 @@ build {
   }
 
   provisioner "powershell" {
-    scripts               = ["${path.root}/setup/osot.ps1"]
+    scripts               = ["${path.root}/files/osot.ps1"]
   }
 
   provisioner "powershell" {
