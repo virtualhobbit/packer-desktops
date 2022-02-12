@@ -45,7 +45,7 @@ build_windows-10:
     - Write-Host "Deploying Windows 10"
     - Set-Location windows-10
     - ../packer.exe init .
-    - ../packer.exe build -force windows-10-pilot.pkr.hcl
+    - ../packer.exe build -force -only=vsphere-iso.Utrecht,vsphere-iso.Packaging,vsphere-iso.Pilot .
 
 install_powercli:
   stage: install
