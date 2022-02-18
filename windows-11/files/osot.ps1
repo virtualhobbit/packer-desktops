@@ -2,8 +2,8 @@ $ErrorActionPreference = "Stop"
 
 $webserver = "intranet.mdb-lab.com"
 $url = "http://" + $webserver
-$exe = "VMwareHorizonOSOptimizationTool-x86_64-2107.exe"
-$arg = '-o -t "VMware Templates\Windows 10 and Server 2016 or later" -storeapp remove-all -f 0 1 2 3 4 5 6 7 8 9 10'
+$exe = "VMwareHorizonOSOptimizationTool-x86_64-1.0_2111.exe"
+$arg = '-o -t "VMware Templates\Windows 10 and Server 2016 or later" -visualeffect performance -notification disable -windowsupdate disable -officeupdate disable -storeapp remove-all -antivirus disable -securitycenter disable -f 0 1 2 3 4 5 6 7 8 9 10'
 $siUrl = "https://download.sysinternals.com/files"
 $zip = "SDelete.zip"
 
@@ -44,3 +44,4 @@ ForEach ($file in $entries){
 }
 $source.Dispose()
 Remove-Item $env:TEMP\$zip -Confirm:$false
+

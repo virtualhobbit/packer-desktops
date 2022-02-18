@@ -54,6 +54,8 @@ source "vsphere-iso" "Utrecht" {
   notes                   = "Base OS, VMware Tools, patched up to ${legacy_isotime("20060102")}"
 
   boot_order              = "disk,cdrom"
+  boot_wait               = "3s"
+  boot_command            = ["<spacebar><spacebar>"]
 
   communicator            = "winrm"
   winrm_password          = "${local.winrmPass}"
