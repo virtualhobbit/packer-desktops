@@ -1,14 +1,14 @@
 packer {
-  required_version = ">= 1.8.0"
+  required_version = ">= 1.8.5"
   required_plugins {
     vsphere = {
-      version = ">= v1.0.3"
+      version = ">= v1.1.1"
           source  = "github.com/hashicorp/vsphere"
     }
   }
   required_plugins {
     windows-update = {
-      version = ">= 0.14.0"
+      version = ">= 0.14.1"
           source  = "github.com/rgl/windows-update"
     }
   }
@@ -20,7 +20,7 @@ source "vsphere-iso" "Utrecht" {
   password                = "${var.vcenterPass}"
   insecure_connection     = true
   
-  vm_name                 = "Windows 10 (21H2)"
+  vm_name                 = "Windows 10 (22H2)"
   vm_version              = 15
   guest_os_type           = "windows9_64Guest"
 
@@ -33,11 +33,11 @@ source "vsphere-iso" "Utrecht" {
   folder                  = "${var.folder}"
   disk_controller_type    = ["pvscsi"]
   storage {
-    disk_size             = 51200
+    disk_size             = 102400
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_21h2_x64_dvd_71e6101d.iso", "[${var.datastoreISO}] VMware-tools-windows-12.0.0-19345655.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
   remove_cdrom            = true
 
   network_adapters {
@@ -65,7 +65,7 @@ source "vsphere-iso" "Southport" {
   password                = "${var.vcenterPass}"
   insecure_connection     = true
 
-  vm_name                 = "Windows 10 (21H2)"
+  vm_name                 = "Windows 10 (22H2)"
   vm_version              = 15
   guest_os_type           = "windows9_64Guest"
 
@@ -82,7 +82,7 @@ source "vsphere-iso" "Southport" {
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_21h2_x64_dvd_71e6101d.iso", "[${var.datastoreISO}] VMware-tools-windows-12.0.0-19345655.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
   remove_cdrom            = true
 
   network_adapters {

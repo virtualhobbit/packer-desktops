@@ -1,14 +1,14 @@
 packer {
-  required_version = ">= 1.7.10"
+  required_version = ">= 1.8.5"
   required_plugins {
     vsphere = {
-      version = ">= v1.0.3"
+      version = ">= v1.1.1"
           source  = "github.com/hashicorp/vsphere"
     }
   }
   required_plugins {
     windows-update = {
-      version = ">= 0.14.0"
+      version = ">= 0.14.1"
           source  = "github.com/rgl/windows-update"
     }
   }
@@ -20,7 +20,7 @@ source "vsphere-iso" "Utrecht" {
   password                = "${var.vcenterPass}"
   insecure_connection     = true
 
-  vm_name                 = "Windows 11 (21H2) (PILOT)"
+  vm_name                 = "Windows 11 (21H2)"
   vm_version              = 15
   guest_os_type           = "windows9_64Guest"
 
@@ -37,7 +37,7 @@ source "vsphere-iso" "Utrecht" {
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_11_business_editions_x64_dvd_47a2b04f.iso", "[${var.datastoreISO}] VMware-tools-windows-11.3.5-18557794.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_11_business_editions_version_21h2_updated_nov_2022_x64_dvd_de6da417", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
   remove_cdrom = true
   cdrom_type              = "sata"
   firmware                = "efi"

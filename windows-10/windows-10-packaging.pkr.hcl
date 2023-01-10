@@ -4,7 +4,7 @@ source "vsphere-iso" "Packaging" {
   password                = "${var.vcenterPass}"
   insecure_connection     = true
 
-  vm_name                 = "Windows 10 (21H2) (PACKAGING)"
+  vm_name                 = "Windows 10 (22H2) (PACKAGING)"
   vm_version              = 15
   guest_os_type           = "windows9_64Guest"
 
@@ -17,11 +17,11 @@ source "vsphere-iso" "Packaging" {
   folder                  = "${var.folder}"
   disk_controller_type    = ["pvscsi"]
   storage {
-    disk_size             = 51200
+    disk_size             = 102400
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_21h2_x64_dvd_71e6101d.iso", "[${var.datastoreISO}] VMware-tools-windows-12.0.0-19345655.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
   remove_cdrom            = true
 
   network_adapters {
