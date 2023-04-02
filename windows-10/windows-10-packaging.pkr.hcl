@@ -5,7 +5,7 @@ source "vsphere-iso" "Packaging" {
   insecure_connection     = true
 
   vm_name                 = "Windows 10 (22H2) (PACKAGING)"
-  vm_version              = 15
+  vm_version              = 20
   guest_os_type           = "windows9_64Guest"
 
   CPUs                    = 2
