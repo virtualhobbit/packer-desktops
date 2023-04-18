@@ -37,7 +37,7 @@ source "vsphere-iso" "Utrecht" {
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_11_business_editions_version_21h2_updated_nov_2022_x64_dvd_de6da417", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_11_business_editions_version_21h2_updated_nov_2022_x64_dvd_de6da417", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
   remove_cdrom = true
   cdrom_type              = "sata"
   firmware                = "efi"

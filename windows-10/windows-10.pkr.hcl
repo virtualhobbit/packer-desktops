@@ -37,7 +37,7 @@ source "vsphere-iso" "Utrecht" {
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
   remove_cdrom            = true
 
   network_adapters {
@@ -66,7 +66,7 @@ source "vsphere-iso" "Southport" {
   insecure_connection     = true
 
   vm_name                 = "Windows 10 (22H2)"
-  vm_version              = 15
+  vm_version              = 20
   guest_os_type           = "windows9_64Guest"
 
   CPUs                    = 2
@@ -82,7 +82,7 @@ source "vsphere-iso" "Southport" {
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
   remove_cdrom            = true
 
   network_adapters {
