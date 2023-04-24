@@ -21,7 +21,7 @@ source "vsphere-iso" "Packaging" {
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.1.5-20735119.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
   remove_cdrom            = true
 
   network_adapters {

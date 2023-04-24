@@ -2,7 +2,7 @@ packer {
   required_version = ">= 1.8.6"
   required_plugins {
     vsphere = {
-      version = ">= v1.1.1"
+      version = ">= v1.1.2"
           source  = "github.com/hashicorp/vsphere"
     }
   }
@@ -38,7 +38,7 @@ source "vsphere-iso" "Utrecht" {
   }
   floppy_files            = ["${path.root}/files/"]
   iso_paths               = ["[${var.datastoreISO}] en-gb_windows_11_business_editions_version_21h2_updated_nov_2022_x64_dvd_de6da417", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
-  remove_cdrom = true
+  remove_cdrom            = true
   cdrom_type              = "sata"
   firmware                = "efi"
 
