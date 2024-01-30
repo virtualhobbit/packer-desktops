@@ -1,23 +1,23 @@
 packer {
-  required_version = ">= 1.8.6"
+  required_version = ">= 1.10.0"
   required_plugins {
     vsphere = {
-      version = ">= v1.1.2"
+      version = ">= 1.2.4"
           source  = "github.com/hashicorp/vsphere"
     }
   }
   required_plugins {
     windows-update = {
-      version = ">= 0.14.1"
+      version = ">= 0.15.0"
           source  = "github.com/rgl/windows-update"
     }
   }
 }
 
 source "vsphere-iso" "Utrecht" {
-  vcenter_server          = "${var.vcenterNL}"
-  username                = "${var.vcenterUser}"
-  password                = "${var.vcenterPass}"
+  vcenter_server          = var.vcenterNL
+  username                = var.vcenterUser
+  password                = var.vcenterPass
   insecure_connection     = true
 
   vm_name                 = "Windows 11 (21H2)"
@@ -27,23 +27,23 @@ source "vsphere-iso" "Utrecht" {
   CPUs                    = 2
   RAM                     = 8192
   RAM_reserve_all         = true
-  cluster                 = "${var.cluster}"
+  cluster                 = var.cluster
 
-  datastore               = "${var.datastoreNL}"
-  folder                  = "${var.folder}"
+  datastore               = var.datastoreNL
+  folder                  = var.folder
   disk_controller_type    = ["pvscsi"]
   storage {
     disk_size             = 102400
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_11_business_editions_version_21h2_updated_nov_2022_x64_dvd_de6da417", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_11_business_editions_version_21h2_updated_nov_2022_x64_dvd_de6da417", "[${var.datastoreISO}] VMware-tools-windows-12.3.5-22544099.iso"]
   remove_cdrom            = true
   cdrom_type              = "sata"
   firmware                = "efi"
 
   network_adapters {
-    network               = "${var.network}"
+    network               = var.network
     network_card          = "vmxnet3"
   }
 
@@ -58,8 +58,8 @@ source "vsphere-iso" "Utrecht" {
   boot_command            = ["<spacebar><spacebar>"]
 
   communicator            = "winrm"
-  winrm_password          = "${local.winrmPass}"
-  winrm_username          = "${local.winrmUser}"
+  winrm_password          = local.winrmPass
+  winrm_username          = local.winrmUser
 
   convert_to_template     = false
   create_snapshot         = true

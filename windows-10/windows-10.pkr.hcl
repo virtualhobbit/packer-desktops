@@ -1,23 +1,23 @@
 packer {
-  required_version = ">= 1.8.6"
+  required_version = ">= 1.10.0"
   required_plugins {
     vsphere = {
-      version = ">= v1.1.2"
+      version = ">= 1.2.4"
           source  = "github.com/hashicorp/vsphere"
     }
   }
   required_plugins {
     windows-update = {
-      version = ">= 0.14.1"
+      version = ">= 0.15.0"
           source  = "github.com/rgl/windows-update"
     }
   }
 }
 
 source "vsphere-iso" "Utrecht" {
-  vcenter_server          = "${var.vcenterNL}"
-  username                = "${var.vcenterUser}"
-  password                = "${var.vcenterPass}"
+  vcenter_server          = var.vcenterNL
+  username                = var.vcenterUser
+  password                = var.vcenterPass
   insecure_connection     = true
   
   vm_name                 = "Windows 10 (22H2)"
@@ -27,21 +27,21 @@ source "vsphere-iso" "Utrecht" {
   CPUs                    = 2
   RAM                     = 8192
   RAM_reserve_all         = true
-  cluster                 = "${var.cluster}"
+  cluster                 = var.cluster
   
-  datastore               = "${var.datastoreNL}"
-  folder                  = "${var.folder}"
+  datastore               = var.datastoreNL
+  folder                  = var.folder
   disk_controller_type    = ["pvscsi"]
   storage {
     disk_size             = 102400
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.3.5-22544099.iso"]
   remove_cdrom            = true
 
   network_adapters {
-    network               = "${var.network}"
+    network               = var.network
     network_card          = "vmxnet3"
   }
 
@@ -52,17 +52,17 @@ source "vsphere-iso" "Utrecht" {
   boot_order              = "disk,cdrom"
 
   communicator            = "winrm"
-  winrm_password          = "${local.winrmPass}"
-  winrm_username          = "${local.winrmUser}"
+  winrm_password          = local.winrmPass
+  winrm_username          = local.winrmUser
 
   convert_to_template     = false
   create_snapshot         = true
 }
 
 source "vsphere-iso" "Southport" {
-  vcenter_server          = "${var.vcenterUK}"
-  username                = "${var.vcenterUser}"
-  password                = "${var.vcenterPass}"
+  vcenter_server          = var.vcenterUK
+  username                = var.vcenterUser
+  password                = var.vcenterPass
   insecure_connection     = true
 
   vm_name                 = "Windows 10 (22H2)"
@@ -72,21 +72,21 @@ source "vsphere-iso" "Southport" {
   CPUs                    = 2
   RAM                     = 8192
   RAM_reserve_all         = true
-  cluster                 = "${var.cluster}"
+  cluster                 = var.cluster
 
-  datastore               = "${var.datastoreUK}"
-  folder                  = "${var.folder}"
+  datastore               = var.datastoreUK
+  folder                  = var.folder
   disk_controller_type    = ["pvscsi"]
   storage {
-    disk_size             = 51200
+    disk_size             = 102400
     disk_thin_provisioned = true
   }
   floppy_files            = ["${path.root}/files/"]
-  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.2.0-21223074.iso"]
+  iso_paths               = ["[${var.datastoreISO}] en-gb_windows_10_business_editions_version_22h2_updated_nov_2022_x64_dvd_688fca0e.iso", "[${var.datastoreISO}] VMware-tools-windows-12.3.5-22544099.iso"]
   remove_cdrom            = true
 
   network_adapters {
-    network               = "${var.network}"
+    network               = var.network
     network_card          = "vmxnet3"
   }
 
@@ -97,8 +97,8 @@ source "vsphere-iso" "Southport" {
   boot_order              = "disk,cdrom"
 
   communicator            = "winrm"
-  winrm_password          = "${local.winrmPass}"
-  winrm_username          = "${local.winrmUser}"
+  winrm_password          = local.winrmPass
+  winrm_username          = local.winrmUser
 
   convert_to_template     = false
   create_snapshot         = true
@@ -112,8 +112,8 @@ build {
   }
 
   provisioner "powershell" {
-    elevated_password     = "${local.winrmPass}"
-    elevated_user         = "${local.winrmUser}"
+    elevated_password     = local.winrmPass
+    elevated_user         = local.winrmUser
     inline                = ["Get-WindowsCapability -Name RSAT* -Online | Add-WindowsCapability -Online"]
   }
 
